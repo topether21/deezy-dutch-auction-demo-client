@@ -5,14 +5,16 @@ export const useDutchAuction = () => {
   const { socket, connected, error } = useSocket('http://localhost:3001')
   const { lastMessage, sendMessage, status } = useSocketEvent(socket, 'message')
 
-  console.log({ socket, error, lastMessage, connected, status })
-
   useEffect(() => {
     if (connected) {
       console.log('connected')
-      sendMessage({ message: 'all' })
+      sendMessage({ join: 'all' })
     }
   }, [connected])
 
-  return { status, data: lastMessage }
+  useEffect(() => {
+    console.log(['lastMessage'], lastMessage)
+  }, [lastMessage])
+
+  return { status, data: lastMessage, error }
 }
